@@ -50,27 +50,6 @@ const items = [
   { id: "0-23", name: "Smart Pulse Oximeters", fee: 0, cost: 150, icon: "🩸" },
 ];
 
-// Modal creation and popup logic
-const modalHTML = `
-  <div id="info-modal">
-    <div>
-      <p>Did you know it does not matter if your tech is 1 year old or 20 years old? It’s Covered!</p>
-      <button id="modal-ok-btn">OK</button>
-    </div>
-  </div>
-`;
-document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-const modal = document.getElementById('info-modal');
-const modalOkBtn = document.getElementById('modal-ok-btn');
-
-modalOkBtn.addEventListener('click', () => {
-  modal.classList.remove('show');
-  popupShown = true;
-});
-
-let popupShown = false;
-
 function createTile(item) {
   const div = document.createElement("div");
   div.className = "tile";
@@ -94,20 +73,12 @@ function createTile(item) {
   div.addEventListener("click", () => {
     div.classList.toggle("selected");
     updateTotal();
-
-    if (!popupShown && document.querySelectorAll(".tile.selected").length > 0) {
-      modal.classList.add('show');
-    }
   });
   div.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       div.classList.toggle("selected");
       updateTotal();
-
-      if (!popupShown && document.querySelectorAll(".tile.selected").length > 0) {
-        modal.classList.add('show');
-      }
     }
   });
 
