@@ -50,7 +50,7 @@ const items = [
   { id: "0-23", name: "Smart Pulse Oximeters", fee: 0, cost: 150, icon: "🩸" },
 ];
 
-// Modal creation and popup logic
+// Info modal popup (first selection)
 const modalHTML = `
   <div id="info-modal">
     <div>
@@ -63,13 +63,35 @@ document.body.insertAdjacentHTML('beforeend', modalHTML);
 
 const modal = document.getElementById('info-modal');
 const modalOkBtn = document.getElementById('modal-ok-btn');
-
 modalOkBtn.addEventListener('click', () => {
   modal.classList.remove('show');
   popupShown = true;
 });
 
 let popupShown = false;
+
+// Scroll bottom popup
+const scrollPopupHTML = `
+  <div id="scroll-popup">
+    You will NEVER need to show receipts or proof of purchase anytime you need to make a claim
+  </div>
+`;
+document.body.insertAdjacentHTML('beforeend', scrollPopupHTML);
+const scrollPopup = document.getElementById('scroll-popup');
+let scrollPopupShown = false;
+
+window.addEventListener('scroll', () => {
+  const scrollPosition = window.scrollY + window.innerHeight;
+  const pageHeight = document.documentElement.scrollHeight;
+
+  if (!scrollPopupShown && scrollPosition >= pageHeight - 50) {
+    scrollPopup.style.opacity = '1';
+    scrollPopupShown = true;
+  }
+});
+scrollPopup.addEventListener('click', () => {
+  scrollPopup.style.opacity = '0';
+});
 
 function createTile(item) {
   const div = document.createElement("div");
