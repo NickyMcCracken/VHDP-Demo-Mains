@@ -1,5 +1,5 @@
 const items = [
-  // $99 Service Fee items (estimated equipment costs)
+  // $99 Service Fee items
   { id: "99-1", name: "PCs (Desktops, Laptops, Tablets)", fee: 99, cost: 1200, icon: "🖥️" },
   { id: "99-2", name: "TVs (LCD, Plasma or LED)", fee: 99, cost: 1000, icon: "📺" },
   { id: "99-3", name: "Gaming Systems", fee: 99, cost: 500, icon: "🎮" },
@@ -50,16 +50,16 @@ const items = [
   { id: "0-23", name: "Smart Pulse Oximeters", fee: 0, cost: 150, icon: "🩸" },
 ];
 
-// Info modal popup (first selection)
-const modalHTML = `
-  <div id="info-modal">
-    <div>
+// First modal popup
+const firstModalHTML = `
+  <div id="info-modal" class="modal">
+    <div class="modal-content">
       <p>Did you know it does not matter if your tech is 1 year old or 20 years old? It’s Covered!</p>
       <button id="modal-ok-btn">OK</button>
     </div>
   </div>
 `;
-document.body.insertAdjacentHTML('beforeend', modalHTML);
+document.body.insertAdjacentHTML('beforeend', firstModalHTML);
 
 const modal = document.getElementById('info-modal');
 const modalOkBtn = document.getElementById('modal-ok-btn');
@@ -70,27 +70,33 @@ modalOkBtn.addEventListener('click', () => {
 
 let popupShown = false;
 
-// Scroll bottom popup
-const scrollPopupHTML = `
-  <div id="scroll-popup">
-    You will NEVER need to show receipts or proof of purchase anytime you need to make a claim
+// Scroll modal popup
+const scrollModalHTML = `
+  <div id="scroll-modal" class="modal">
+    <div class="modal-content">
+      <p>You will NEVER need to show receipts or proof of purchase anytime you need to make a claim</p>
+      <button id="scroll-modal-ok-btn">OK</button>
+    </div>
   </div>
 `;
-document.body.insertAdjacentHTML('beforeend', scrollPopupHTML);
-const scrollPopup = document.getElementById('scroll-popup');
-let scrollPopupShown = false;
+document.body.insertAdjacentHTML('beforeend', scrollModalHTML);
+
+const scrollModal = document.getElementById('scroll-modal');
+const scrollModalOkBtn = document.getElementById('scroll-modal-ok-btn');
+scrollModalOkBtn.addEventListener('click', () => {
+  scrollModal.classList.remove('show');
+});
+
+let scrollModalShown = false;
 
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY + window.innerHeight;
   const pageHeight = document.documentElement.scrollHeight;
 
-  if (!scrollPopupShown && scrollPosition >= pageHeight - 50) {
-    scrollPopup.style.opacity = '1';
-    scrollPopupShown = true;
+  if (!scrollModalShown && scrollPosition >= pageHeight - 50) {
+    scrollModal.classList.add('show');
+    scrollModalShown = true;
   }
-});
-scrollPopup.addEventListener('click', () => {
-  scrollPopup.style.opacity = '0';
 });
 
 function createTile(item) {
